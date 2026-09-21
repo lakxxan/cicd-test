@@ -1,4 +1,8 @@
 name: My First Pipeline
 on: [push]
-runs-on: ubuntu-latest
-run: echo "Hello Github Action!"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello Github Action!"
