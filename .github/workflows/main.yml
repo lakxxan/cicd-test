@@ -1,8 +1,22 @@
-name: My First Pipeline
-on: [push]
+name: Auto Deploy to Oracle Server
+
+on:
+  push:
+    branches:
+      - main  # (ඔයාගේ ප්‍රධාන branch එක master නම් මේක master කියලා වෙනස් කරන්න)
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo "Hello Github Action!"
+      - name: Connect to Server and Run Commands
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "Successfully connected via GitHub Actions!"
+            touch /home/ubuntu/deployed-by-github.txt
+            ls -la /home/ubuntu/
